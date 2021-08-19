@@ -1,0 +1,13 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Flow
+metadata:
+  name: s3-flow
+spec:
+  filters:
+    - tag_normaliser: {}
+  match:
+    - select:
+        labels:
+          app.kubernetes.io/name: log-generator
+  localOutputRefs:
+    - s3-output

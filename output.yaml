@@ -1,0 +1,25 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Output
+metadata:
+  name: s3-output
+spec:
+  s3:
+    aws_key_id:
+      valueFrom:
+        secretKeyRef:
+          name: s3-secret
+          key: awsAccessKeyId
+    aws_sec_key:
+      valueFrom:
+        secretKeyRef:
+          name: s3-secret
+          key: awsSecretAccessKey
+    s3_bucket: test-logging-bucket
+    s3_region: eu-west-1
+    s3_endpoint: 'http://192.168.5.39:9000'
+    force_path_style: 'true'
+    path: logs/${tag}/%Y/%m/%d/
+    buffer:
+      timekey: 1m
+      timekey_wait: 10s
+      timekey_use_utc: true

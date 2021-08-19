@@ -1,0 +1,7 @@
+secretGenerator:
+  - name: s3-secret
+    literals:
+      - awsAccessKeyId=AKIAIOSFODNN7EXAMPLE
+      - awsSecretAccessKey=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+generatorOptions:
+  disableNameSuffixHash: true

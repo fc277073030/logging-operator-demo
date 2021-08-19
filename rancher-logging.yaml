@@ -1,0 +1,61 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Logging
+metadata:
+  annotations:
+    meta.helm.sh/release-name: rancher-logging
+    meta.helm.sh/release-namespace: cattle-logging-system
+  labels:
+    app.kubernetes.io/instance: rancher-logging
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: rancher-logging
+    app.kubernetes.io/version: 3.9.4
+    helm.sh/chart: rancher-logging-3.9.400
+  name: rancher-logging
+spec:
+  controlNamespace: cattle-logging-system
+  fluentbit:
+    image:
+      repository: rancher/mirrored-fluent-fluent-bit
+      tag: 1.6.10
+    nodeSelector:
+      kubernetes.io/os: linux
+    security:
+      podSecurityPolicyCreate: true
+      roleBasedAccessControlCreate: true
+    tolerations:
+      - effect: NoSchedule
+        key: cattle.io/os
+        operator: Equal
+        value: linux
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/controlplane
+        value: "true"
+      - effect: NoExecute
+        key: node-role.kubernetes.io/etcd
+        value: "true"
+  fluentd:
+    configReloaderImage:
+      repository: rancher/mirrored-jimmidyson-configmap-reload
+      tag: v0.4.0
+    disablePvc: true
+    image:
+      repository: rancher/mirrored-banzaicloud-fluentd
+      tag: v1.11.5-alpine-12
+    livenessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 15
+      tcpSocket:
+        port: 24240
+    nodeSelector:
+      kubernetes.io/os: linux
+    security:
+      podSecurityPolicyCreate: true
+      roleBasedAccessControlCreate: true
+    tolerations:
+      - effect: NoSchedule
+        key: cattle.io/os
+        operator: Equal
+        value: linux
+status:
+  configCheckResults:
+    c3054702: true
