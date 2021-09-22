@@ -1,0 +1,25 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Output
+metadata:
+  name: demo-output
+spec:
+  s3:
+    aws_key_id:
+      valueFrom:
+        secretKeyRef:
+          key: access-key
+          name: minio
+    aws_sec_key:
+      valueFrom:
+        secretKeyRef:
+          key: secret-key
+          name: minio
+    buffer:
+      timekey: 10s
+      timekey_use_utc: true
+      timekey_wait: 0s
+    force_path_style: "true"
+    path: logs/${tag}/%Y/%m/%d/
+    s3_bucket: demo
+    s3_endpoint: http://minio.logging.svc.cluster.local:9000
+    s3_region: test_region
