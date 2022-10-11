@@ -1,0 +1,6 @@
+resources:
+  - elasticsearch.yaml
+  - kibana.yaml
+  - ingress.yaml
+
+namespace: elastic-stack

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana-ingress
+  namespace: cattle-logging-system
+#  annotations:
+#    nginx.ingress.kubernetes.io/configuration-snippet: |
+#      more_set_headers "server: hide";
+#      more_set_headers "X-Content-Type-Options: nosniff";
+#      more_set_headers "X-Frame-Options: DENY";
+#      more_set_headers "X-Xss-Protection: 1";
+#      add_header
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: logging.fc277073030.com
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: kb-kb-http
+                port:
+                  number: 5601
