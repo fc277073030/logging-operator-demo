@@ -2,7 +2,7 @@ apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana
 metadata:
   name: kb
-  namespace: cattle-logging-system
+  namespace: logging
 spec:
   version: 8.4.3
   count: 1
