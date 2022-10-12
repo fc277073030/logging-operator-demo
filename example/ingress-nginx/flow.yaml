@@ -6,14 +6,18 @@ spec:
   filters:
     - tag_normaliser: {}
     - parser:
-        remove_key_name_field: true
+        remove_key_name_field: true  # 解析成功删除temp字段，如果要保留temp字段则关闭
         reserve_data: true
         parse:
           type: nginx
+    - tag_normaliser:
+        format: cluster1.${namespace_name}.${pod_name}.${labels.app}
   match:
     - select:
         labels:
           app.kubernetes.io/name: ingress-nginx
+
+
   localOutputRefs:
     - es-output
 #  globalOutputRefs:

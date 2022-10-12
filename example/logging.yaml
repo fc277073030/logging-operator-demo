@@ -3,8 +3,14 @@ kind: Logging
 metadata:
   name: default-logging-simple
 spec:
-  fluentd: {}
-  fluentbit: {}
+  fluentd:
+    metrics:
+      serviceMonitor: true
+  fluentbit:
+    metrics:
+      serviceMonitor: true
   controlNamespace: logging
-  watchNamespaces:
-    - default
+#  watchNamespaces:
+#    - default
+#    - ingress-nginx
+
