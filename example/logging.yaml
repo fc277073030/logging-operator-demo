@@ -10,7 +10,7 @@ spec:
     metrics:
       serviceMonitor: true
   controlNamespace: logging
-#  watchNamespaces:
-#    - default
-#    - ingress-nginx
+  watchNamespaces:
+    - default
+    - ingress-nginx
 

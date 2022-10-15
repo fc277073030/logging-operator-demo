@@ -1,0 +1,27 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: Output
+metadata:
+  name: es-output
+spec:
+  elasticsearch:
+    host: es-es-http.logging.svc.cluster.local
+    port: 9200
+    scheme: http
+    ssl_verify: false
+    ssl_version: TLSv1_2
+    user: elastic
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-password
+          key: ES_PASSWORD
+    buffer:
+      timekey: 1m
+      timekey_wait: 30s
+      timekey_use_utc: false # 默认false, 使用本地时区
+    logstash_format: true  # 启用 Logstash 日志格式
+    logstash_prefix: flask-demo #索引名称
+#    index_name: default_nginx  # 写入事件的索引名称， 默认值 fluentd
+    include_timestamp: true  # 在 logstash_format 所做的所有设置之后，将 @timestamp 字段添加到日志中，但对 index_name 没有限制。这允许人们登录到 Elasticsearch 中的别名并利用翻转 API。
+    utc_index: false  # 禁用utc时间，采用本地时区
+
